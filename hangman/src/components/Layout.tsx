@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Guesses } from "./Guesses";
+import { LetterButton } from "./LetterButton";
+import { alphabet, Letter } from "../data/alphabet";
 
 const Container = styled.div`
   font-family: "Architects Daughter", cursive;
@@ -23,11 +25,22 @@ const Container = styled.div`
   background-size: 100% 1.2em;
 `;
 
+const LetterContainer = styled.div`
+  display: flex;
+  width: 40%;
+  flex-wrap: wrap;
+`;
+
 export const Layout: React.FC = () => {
   return (
     <Container>
       Hello
       <Guesses letter="korv" />
+      <LetterContainer>
+        {alphabet.map((letter: Letter, id: number) => (
+          <LetterButton key={id} letterData={letter} />
+        ))}
+      </LetterContainer>
     </Container>
   );
 };
