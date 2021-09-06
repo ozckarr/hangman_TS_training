@@ -1,15 +1,33 @@
 import React from "react";
 import styled from "styled-components";
+import { Guesses } from "./Guesses";
 
 const Container = styled.div`
+  font-family: "Architects Daughter", cursive;
+  color: #000f55;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   width: 100vw;
+  background-color: #fff;
+  background-image: linear-gradient(
+      90deg,
+      transparent 79px,
+      #abced4 79px,
+      #abced4 81px,
+      transparent 81px
+    ),
+    linear-gradient(#eee 0.1em, transparent 0.1em);
+  background-size: 100% 1.2em;
 `;
 
 export const Layout: React.FC = () => {
-  return <Container>Hello</Container>;
+  return (
+    <Container>
+      Hello
+      <Guesses letter="korv" />
+    </Container>
+  );
 };
