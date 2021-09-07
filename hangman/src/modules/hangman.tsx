@@ -54,6 +54,6 @@ export const handleGuess = (
     }
   });
 
-  //NOTOSELF:
+  //NOTOSELF: its an object tripplecheck in Jest. testData.tsx for jest needed?
   return { HangmanWord: HangmanWord, alphabet: alphabet };
 };

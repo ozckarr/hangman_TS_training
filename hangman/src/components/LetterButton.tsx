@@ -24,16 +24,18 @@ const ButtonCorrect = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  height: 90%;
-  width: 90%;
+  height: 70%;
+  width: 70%;
+  font-weight: bold;
 `;
 const ButtonWrong = styled.div`
   background-image: url(${cross});
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  height: 60%;
-  width: 60%;
+  height: 70%;
+  width: 70%;
+  font-weight: bold;
 `;
 
 interface LetterButtonProps {
@@ -43,6 +45,7 @@ interface LetterButtonProps {
 export const LetterButton: React.FC<LetterButtonProps> = ({ letterData }) => {
   return (
     <Button>
+      {/*Remember only onclick on NotPressed */}
       {letterData.interaction === LetterInteractionType.CorrectGuess && (
         <ButtonCorrect>{letterData.letter}</ButtonCorrect>
       )}
