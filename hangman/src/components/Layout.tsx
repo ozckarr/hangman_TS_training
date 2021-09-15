@@ -2,9 +2,13 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Guesses } from "./Guesses";
 import { TheHanging } from "./TheHanging";
-
 import { LetterButton } from "./LetterButton";
+
 import { alphabet, Letter, LetterInteractionType } from "../data/alphabet";
+import {
+  buildHangmanWord,
+  HangmanWord as HangmanWordType,
+} from "../modules/hangman";
 
 const Container = styled.div`
   font-family: "Architects Daughter", cursive;
@@ -34,13 +38,15 @@ const LetterContainer = styled.div`
 `;
 
 export const Layout: React.FC = () => {
-  const [theWord, setTheWord] = useState<string>("test"); // TODO: Fetch from https://random-word-api.herokuapp.com/home
+  const [theWord, setTheWord] = useState<string>("TEST"); // TODO: Fetch from https://random-word-api.herokuapp.com/home
+  const [hangmanWord, setHangmanWord] = useState<Array<HangmanWordType>>([]);
   const [alphabetData, setAlphabetData] = useState<Array<Letter>>(alphabet);
   const [numberOfWrongGuesses, setNumberOfWrongGuesses] = useState<number>(0);
 
+  // After fetch rework the word for the game
   useEffect(() => {
-    //TODO: Fetch here later
-  }, []);
+    setHangmanWord(buildHangmanWord(theWord));
+  }, [theWord]);
 
   // Counts the number of (wrong) guesses.
   useEffect(() => {
@@ -50,6 +56,10 @@ export const Layout: React.FC = () => {
     setNumberOfWrongGuesses(tries);
   }, [alphabetData]);
 
+  const handleClick = (guessedLetter: string) => {
+    console.log(guessedLetter);
+  };
+
   return (
     <Container>
       <TheHanging numberOfTries={numberOfWrongGuesses} />
@@ -57,7 +67,11 @@ export const Layout: React.FC = () => {
       <LetterContainer>
         {/* TODO: Lock letters after too many numberOfWrongGuesses of after WIN */}
         {alphabetData.map((letter: Letter, id: number) => (
-          <LetterButton key={id} letterData={letter} />
+          <LetterButton
+            key={id}
+            letterData={letter}
+            handleClick={handleClick}
+          />
         ))}
       </LetterContainer>
     </Container>

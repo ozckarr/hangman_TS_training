@@ -3,6 +3,7 @@ import { Letter, LetterInteractionType } from "../data/alphabet";
 export enum GuessType {
   Revealed,
   Hidden,
+  Space,
 }
 
 export type HangmanWord = {
@@ -15,13 +16,14 @@ export const buildHangmanWord = (newWord: string): HangmanWord[] => {
   const arr = newWord.toUpperCase().split("");
   let hangmanWord: HangmanWord[] | any = [];
   arr.forEach((letter) => {
+    // TODO: If space GuessType.Space
     hangmanWord.push({ letter: letter, guessed: GuessType.Hidden });
   });
   return hangmanWord;
 };
 
 /*
-guess letter comes in
+Guessed letter comes in
 compare if letter in HangmanWord 
 if true swap GuessType to Revealed
 in alphabet swap LetterInteractionType to correct guess

@@ -17,6 +17,7 @@ const Button = styled.div`
   &:hover {
     font-weight: bold;
   }
+  user-select: none;
 `;
 
 const ButtonCorrect = styled.div`
@@ -40,20 +41,31 @@ const ButtonWrong = styled.div`
 
 interface LetterButtonProps {
   letterData: Letter;
+  handleClick: (guessedLetter: string) => void;
 }
 
-export const LetterButton: React.FC<LetterButtonProps> = ({ letterData }) => {
+export const LetterButton: React.FC<LetterButtonProps> = ({
+  letterData,
+  handleClick,
+}) => {
   return (
-    <Button>
+    <>
       {/*Remember only onclick on NotPressed */}
       {letterData.interaction === LetterInteractionType.CorrectGuess && (
-        <ButtonCorrect>{letterData.letter}</ButtonCorrect>
+        <Button>
+          <ButtonCorrect>{letterData.letter}</ButtonCorrect>
+        </Button>
       )}
       {letterData.interaction === LetterInteractionType.WrongGuess && (
-        <ButtonWrong>{letterData.letter}</ButtonWrong>
+        <Button>
+          <ButtonWrong>{letterData.letter}</ButtonWrong>
+        </Button>
       )}
-      {letterData.interaction === LetterInteractionType.NotPressed &&
-        letterData.letter}
-    </Button>
+      {letterData.interaction === LetterInteractionType.NotPressed && (
+        <Button onClick={() => handleClick(letterData.letter)}>
+          {letterData.letter}
+        </Button>
+      )}
+    </>
   );
 };
