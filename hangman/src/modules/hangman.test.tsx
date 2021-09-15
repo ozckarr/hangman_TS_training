@@ -1,54 +1,27 @@
 import {
   buildHangmanWord,
-  HangmanWord,
-  GuessType,
+  //HangmanWord,
+  //GuessType,
   handleGuess,
 } from "./hangman";
 
-const hangmanWord: HangmanWord[] = [
-  {
-    letter: "T",
-    guessed: GuessType.Hidden,
-  },
-  {
-    letter: "E",
-    guessed: GuessType.Hidden,
-  },
-  {
-    letter: "S",
-    guessed: GuessType.Hidden,
-  },
-  {
-    letter: "T",
-    guessed: GuessType.Hidden,
-  },
-];
-const hangmanWordAfter: HangmanWord[] = [
-  {
-    letter: "T",
-    guessed: GuessType.Revealed,
-  },
-  {
-    letter: "E",
-    guessed: GuessType.Hidden,
-  },
-  {
-    letter: "S",
-    guessed: GuessType.Hidden,
-  },
-  {
-    letter: "T",
-    guessed: GuessType.Revealed,
-  },
-];
+import {
+  hangmanWord,
+  hangmanWordAfter,
+  alphabet,
+  alphabetAfter,
+} from "../data/testData";
 
 test("build word for hangman", () => {
   const input: string = "test";
   expect(buildHangmanWord(input)).toEqual(hangmanWord);
 });
 
-test("input handling", () => {
+test("input handling, test T", () => {
   const guess: string = "T";
 
-  //expect(handleGuess(guess, hangmanWord)).toEqual(hangmanWordAfter);
+  expect(handleGuess(guess, hangmanWord, alphabet)).toEqual({
+    HangmanWord: hangmanWordAfter,
+    alphabet: alphabetAfter,
+  });
 });

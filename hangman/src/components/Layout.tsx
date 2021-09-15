@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Guesses } from "./Guesses";
+import { TheHanging } from "./TheHanging";
+
 import { LetterButton } from "./LetterButton";
-import { alphabet, Letter } from "../data/alphabet";
+import { alphabet, Letter, LetterInteractionType } from "../data/alphabet";
 
 const Container = styled.div`
   font-family: "Architects Daughter", cursive;
@@ -32,12 +34,29 @@ const LetterContainer = styled.div`
 `;
 
 export const Layout: React.FC = () => {
+  const [theWord, setTheWord] = useState<string>("test"); // TODO: Fetch from https://random-word-api.herokuapp.com/home
+  const [alphabetData, setAlphabetData] = useState<Array<Letter>>(alphabet);
+  const [numberOfWrongGuesses, setNumberOfWrongGuesses] = useState<number>(0);
+
+  useEffect(() => {
+    //TODO: Fetch here later
+  }, []);
+
+  // Counts the number of (wrong) guesses.
+  useEffect(() => {
+    const tries: number = alphabetData.filter(
+      (letter) => letter.interaction === LetterInteractionType.WrongGuess
+    ).length;
+    setNumberOfWrongGuesses(tries);
+  }, [alphabetData]);
+
   return (
     <Container>
-      Hello
+      <TheHanging numberOfTries={numberOfWrongGuesses} />
       <Guesses letter="korv" />
       <LetterContainer>
-        {alphabet.map((letter: Letter, id: number) => (
+        {/* TODO: Lock letters after too many numberOfWrongGuesses of after WIN */}
+        {alphabetData.map((letter: Letter, id: number) => (
           <LetterButton key={id} letterData={letter} />
         ))}
       </LetterContainer>
