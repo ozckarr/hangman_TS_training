@@ -40,7 +40,7 @@ const LetterContainer = styled.div`
 `;
 
 export const Layout: React.FC = () => {
-  const [theWord, setTheWord] = useState<string>("TEST"); // TODO: Fetch from https://random-word-api.herokuapp.com/home
+  const [theWord, setTheWord] = useState<string>("TEST WORD"); // TODO: Fetch from https://random-word-api.herokuapp.com/home
   const [hangmanWord, setHangmanWord] = useState<Array<HangmanWordType>>([]);
   const [alphabetData, setAlphabetData] = useState<Array<Letter>>(alphabet);
   const [numberOfWrongGuesses, setNumberOfWrongGuesses] = useState<number>(0);
@@ -60,7 +60,10 @@ export const Layout: React.FC = () => {
 
     const checkWin: boolean =
       hangmanWord.filter((letter) => letter.guessed === GuessType.Revealed)
-        .length === hangmanWord.length
+        .length +
+        hangmanWord.filter((letter) => letter.guessed === GuessType.Space)
+          .length ===
+      hangmanWord.length
         ? true
         : false;
 

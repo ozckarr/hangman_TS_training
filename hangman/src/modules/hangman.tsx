@@ -16,8 +16,11 @@ export const buildHangmanWord = (newWord: string): HangmanWord[] => {
   const arr = newWord.toUpperCase().split("");
   let hangmanWord: HangmanWord[] | any = [];
   arr.forEach((letter) => {
-    // TODO: If space GuessType.Space
-    hangmanWord.push({ letter: letter, guessed: GuessType.Hidden });
+    if (letter === " ") {
+      hangmanWord.push({ letter: letter, guessed: GuessType.Space });
+    } else {
+      hangmanWord.push({ letter: letter, guessed: GuessType.Hidden });
+    }
   });
   return hangmanWord;
 };
