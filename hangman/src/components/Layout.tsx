@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Guesses } from "./Guesses";
 import { TheHanging } from "./TheHanging";
 import { LetterButton } from "./LetterButton";
+import { HangmanWord } from "./HangmanWord";
 
 import { alphabet, Letter, LetterInteractionType } from "../data/alphabet";
 import {
@@ -63,7 +63,7 @@ export const Layout: React.FC = () => {
   return (
     <Container>
       <TheHanging numberOfTries={numberOfWrongGuesses} />
-      <Guesses letter="korv" />
+      <HangmanWord word={hangmanWord} />
       <LetterContainer>
         {/* TODO: Lock letters after too many numberOfWrongGuesses of after WIN */}
         {alphabetData.map((letter: Letter, id: number) => (
