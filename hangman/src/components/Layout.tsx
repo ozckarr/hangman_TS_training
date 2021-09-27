@@ -8,6 +8,8 @@ import { alphabet, Letter, LetterInteractionType } from "../data/alphabet";
 import {
   buildHangmanWord,
   HangmanWord as HangmanWordType,
+  handleGuess,
+  GuessType,
 } from "../modules/hangman";
 
 const Container = styled.div`
@@ -42,6 +44,7 @@ export const Layout: React.FC = () => {
   const [hangmanWord, setHangmanWord] = useState<Array<HangmanWordType>>([]);
   const [alphabetData, setAlphabetData] = useState<Array<Letter>>(alphabet);
   const [numberOfWrongGuesses, setNumberOfWrongGuesses] = useState<number>(0);
+  const [winCheck, setWinCheck] = useState<boolean>(false);
 
   // After fetch rework the word for the game
   useEffect(() => {
@@ -54,16 +57,26 @@ export const Layout: React.FC = () => {
       (letter) => letter.interaction === LetterInteractionType.WrongGuess
     ).length;
     setNumberOfWrongGuesses(tries);
-  }, [alphabetData]);
+
+    const checkWin: boolean =
+      hangmanWord.filter((letter) => letter.guessed === GuessType.Revealed)
+        .length === hangmanWord.length
+        ? true
+        : false;
+
+    setWinCheck(checkWin);
+  }, [alphabetData, hangmanWord]);
 
   const handleClick = (guessedLetter: string) => {
-    console.log(guessedLetter);
+    const handledGuess = handleGuess(guessedLetter, hangmanWord, alphabetData);
+    setHangmanWord([...handledGuess.HangmanWord]);
+    setAlphabetData([...handledGuess.alphabet]);
   };
 
   return (
     <Container>
       <TheHanging numberOfTries={numberOfWrongGuesses} />
-      <HangmanWord word={hangmanWord} />
+      <HangmanWord word={hangmanWord} wrongGuesses={numberOfWrongGuesses} />
       <LetterContainer>
         {/* TODO: Lock letters after too many numberOfWrongGuesses of after WIN */}
         {alphabetData.map((letter: Letter, id: number) => (
@@ -71,6 +84,8 @@ export const Layout: React.FC = () => {
             key={id}
             letterData={letter}
             handleClick={handleClick}
+            wrongGuesses={numberOfWrongGuesses}
+            winCheck={winCheck}
           />
         ))}
       </LetterContainer>

@@ -42,11 +42,15 @@ const ButtonWrong = styled.div`
 interface LetterButtonProps {
   letterData: Letter;
   handleClick: (guessedLetter: string) => void;
+  wrongGuesses: number;
+  winCheck: boolean;
 }
 
 export const LetterButton: React.FC<LetterButtonProps> = ({
   letterData,
   handleClick,
+  wrongGuesses,
+  winCheck,
 }) => {
   return (
     <>
@@ -61,11 +65,14 @@ export const LetterButton: React.FC<LetterButtonProps> = ({
           <ButtonWrong>{letterData.letter}</ButtonWrong>
         </Button>
       )}
-      {letterData.interaction === LetterInteractionType.NotPressed && (
-        <Button onClick={() => handleClick(letterData.letter)}>
-          {letterData.letter}
-        </Button>
-      )}
+      {letterData.interaction === LetterInteractionType.NotPressed &&
+        (wrongGuesses <= 7 && !winCheck ? (
+          <Button onClick={() => handleClick(letterData.letter)}>
+            {letterData.letter}
+          </Button>
+        ) : (
+          <Button>{letterData.letter}</Button>
+        ))}
     </>
   );
 };
